@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShoppingBag, Zap, Check } from 'lucide-react';
+import { Plus, Minus, ShoppingCart, Zap, Check } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
-import { ButtonLink } from '@/components/ui/Button';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import { FAQAccordion } from '@/components/ui/FAQAccordion';
-import { ProductCard } from '@/components/public/ProductCard';
+import { StoreProductCard } from '@/components/store/StoreProductCard';
 import { getProductBySlug, getRelatedProducts } from '@/data/products';
+import { useCart } from '@/context/CartContext';
 import { NotFoundPage } from './NotFoundPage';
 
-export function ProductDetailPage() {
+export function StoreProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const product = slug ? getProductBySlug(slug) : undefined;
+  const { addItem } = useCart();
+  const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
+  const [added, setAdded] = useState(false);
 
   if (!product) return <NotFoundPage />;
 
@@ -25,6 +29,16 @@ export function ProductDetailPage() {
       ? 'text-amber-600 bg-amber-50'
       : 'text-brand-blue bg-brand-blue/8';
 
+  const handleAddToCart = () => {
+    addItem(product, quantity);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
+
+  const handleBuyNow = () => {
+    addItem(product, quantity);
+    window.location.href = '/store/checkout';
+  };
 
   const tabs = [
     { id: 'overview', label: 'Overview' },
@@ -47,8 +61,7 @@ export function ProductDetailPage() {
       <div className="container-page py-8">
         <Breadcrumbs
           items={[
-            { label: 'Home', path: '/' },
-            { label: 'Products', path: '/products' },
+            { label: 'Store Home', path: '/store' },
             { label: product.category, path: `/products?category=${product.categorySlug}` },
             { label: product.name },
           ]}
@@ -97,24 +110,45 @@ export function ProductDetailPage() {
               </span>
             </div>
 
-            {/* CTAs */}
+            {/* Quantity + Add to cart */}
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <ButtonLink
-                to={`/store/login?redirect=/store/products/${product.slug}`}
+              <div className="flex items-center border border-navy/12 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="flex items-center justify-center w-12 h-12 hover:bg-navy/5"
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="w-4 h-4" />
+                </button>
+                <span className="w-14 text-center font-semibold">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="flex items-center justify-center w-12 h-12 hover:bg-navy/5"
+                  aria-label="Increase quantity"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
+              <Button
+                onClick={handleAddToCart}
                 variant="primary"
                 size="lg"
                 className="flex-1"
               >
-                <ShoppingBag className="w-5 h-5" /> Buy This Product
-              </ButtonLink>
-              <ButtonLink
-                to="/contact"
-                variant="outline"
+                {added ? (
+                  <><Check className="w-5 h-5" /> Added to Cart</>
+                ) : (
+                  <><ShoppingCart className="w-5 h-5" /> Add to Cart</>
+                )}
+              </Button>
+              <Button
+                onClick={handleBuyNow}
+                variant="secondary"
                 size="lg"
                 className="flex-1"
               >
-                Contact Us
-              </ButtonLink>
+                <Zap className="w-5 h-5" /> Buy Now
+              </Button>
             </div>
 
             {/* Quick info */}
@@ -244,15 +278,15 @@ export function ProductDetailPage() {
           <h2 className="text-2xl font-bold text-ink mb-8">Related Products</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {related.map((p) => (
-              <ProductCard key={p.slug} product={p} />
+              <StoreProductCard key={p.slug} product={p} />
             ))}
           </div>
         </section>
       )}
 
       <div className="container-page pb-16">
-        <ButtonLink to="/products" variant="outline" size="md">
-          ← Back to All Products
+        <ButtonLink to="/store" variant="outline" size="md">
+          ← Back to Store Home
         </ButtonLink>
       </div>
     </>

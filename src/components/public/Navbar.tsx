@@ -2,14 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, ShoppingBag, Menu, Sprout, X } from 'lucide-react';
 import { navItems } from '@/data/navigation';
-import { useCart } from '@/context/CartContext';
 import { useScrollPosition } from '@/hooks/useReveal';
 import { MobileMenu } from './MobileMenu';
 import logoIcon from '../../logos/main_short_transparent.png';
 
 export function Navbar() {
   const scrolled = useScrollPosition();
-  const { totalItems, openCart } = useCart();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -105,26 +103,6 @@ export function Navbar() {
 
             {/* Right side */}
             <div className="flex items-center gap-3">
-              <Link
-                to="/products"
-                className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold bg-brand-green text-white rounded-lg hover:bg-brand-green/90 transition-colors shadow-sm"
-              >
-                Shop Products
-              </Link>
-
-              <button
-                onClick={openCart}
-                className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-navy/5 transition-colors"
-                aria-label={`Cart with ${totalItems} items`}
-              >
-                <ShoppingBag className="w-5 h-5 text-ink" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold text-white bg-brand-blue rounded-full">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
-
               <button
                 onClick={() => setMobileOpen(true)}
                 className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-navy/5 transition-colors"

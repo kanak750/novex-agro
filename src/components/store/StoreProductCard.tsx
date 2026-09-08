@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import type { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
-
 import { motion } from 'motion/react';
 
-interface ProductCardProps {
+interface StoreProductCardProps {
   product: Product;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function StoreProductCard({ product }: StoreProductCardProps) {
   const { addItem } = useCart();
 
   return (
@@ -18,7 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="group flex flex-col overflow-hidden border border-navy/8 bg-white rounded-xl transition-shadow duration-500 hover:shadow-xl hover:shadow-navy/5 hover:border-navy/20"
     >
-      <Link to={`/products/${product.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-cream">
+      <Link to={`/store/products/${product.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-cream">
         <img
           src={product.image}
           alt={product.name}
@@ -31,7 +30,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
       <div className="flex flex-col flex-1 p-5">
         <h3 className="font-semibold text-ink text-lg leading-snug">
-          <Link to={`/products/${product.slug}`} className="hover:text-brand-green transition-colors">
+          <Link to={`/store/products/${product.slug}`} className="hover:text-brand-green transition-colors">
             {product.name}
           </Link>
         </h3>
@@ -39,10 +38,10 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="mt-4 flex items-center justify-between gap-3 pt-4 border-t border-navy/6">
           <span className="text-sm font-semibold text-ink">{product.price}</span>
           <Link
-            to={`/products/${product.slug}`}
+            to={`/store/products/${product.slug}`}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green link-underline"
           >
-            View Product <ArrowRight className="w-4 h-4" />
+            View Details <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
         <button

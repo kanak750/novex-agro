@@ -7,7 +7,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Smart Irrigation',
     date: '2025-08-15',
     excerpt: 'A practical overview of how smart irrigation systems work and the role of automation in modern farm water management.',
-    image: 'https://images.pexels.com/photos/31231189/pexels-photo-31231189.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c36?auto=format&fit=crop&w=1200',
     content: [
       'Smart irrigation systems use automation and remote control to manage water delivery more efficiently than traditional manual methods. This article provides a general overview of how these systems work.',
       'At their core, smart irrigation systems connect pumps, valves and sensors to a control interface that allows farmers to operate and monitor water delivery without being physically present at each point.',
@@ -22,7 +22,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Technology',
     date: '2025-07-28',
     excerpt: 'An introduction to the technology behind connected agricultural equipment and how devices communicate in a farm environment.',
-    image: 'https://images.pexels.com/photos/6792187/pexels-photo-6792187.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200',
     content: [
       'Connected farm equipment uses communication technology to send and receive operational data between devices in the field and a central interface accessible to the farmer.',
       'The basic architecture involves a device (such as a motor controller or sensor), a communication link, and a software layer that presents the data to the user.',
@@ -36,7 +36,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Industry',
     date: '2025-06-10',
     excerpt: 'An overview of key technology trends that are influencing how farms operate and how agricultural equipment is evolving.',
-    image: 'https://images.pexels.com/photos/26730197/pexels-photo-26730197.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1530533718754-001d2668365a?auto=format&fit=crop&w=1200',
     content: [
       'Agriculture is seeing increased adoption of connected devices, automation and data-driven management approaches. This article explores some of the general trends shaping the industry.',
       'Remote monitoring and control are becoming more accessible, allowing farmers to manage equipment without physical visits to each location.',
@@ -50,7 +50,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Remote Control',
     date: '2025-05-22',
     excerpt: 'How remote motor control can reduce manual field visits and improve operational convenience for farmers.',
-    image: 'https://images.pexels.com/photos/34194564/pexels-photo-34194564.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200',
     content: [
       'Remote motor control allows farmers to start and stop agricultural pumps from a distance, reducing the need to travel to equipment locations for every operation.',
       'This capability is particularly valuable for farms with pumps spread across large areas, where each manual visit consumes significant time.',
@@ -64,7 +64,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Monitoring',
     date: '2025-04-15',
     excerpt: 'A beginner-friendly look at what farm monitoring systems do and how they bring visibility to agricultural operations.',
-    image: 'https://images.pexels.com/photos/5230957/pexels-photo-5230957.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1586771107445-d3af2835368a?auto=format&fit=crop&w=1200',
     content: [
       'Farm monitoring systems collect and display data from agricultural equipment and field sensors, giving farmers a centralized view of their operations.',
       'A typical monitoring setup includes sensors or devices in the field, a communication layer, and a dashboard that presents the collected information.',
@@ -78,7 +78,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Automation',
     date: '2025-03-08',
     excerpt: 'A general introduction to how automation is being applied in agricultural operations and what it means for farmers.',
-    image: 'https://images.pexels.com/photos/18135422/pexels-photo-18135422.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c36?auto=format&fit=crop&w=1200',
     content: [
       'Automation in agriculture involves using technology to perform tasks that would otherwise require manual operation, such as starting pumps or switching equipment.',
       'The goal of automation is not to replace the farmer but to reduce repetitive manual work and free up time for higher-value activities.',
@@ -140,18 +140,18 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const galleryItems: GalleryItem[] = [
-  { image: 'https://images.pexels.com/photos/11276073/pexels-photo-11276073.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Agriculture', caption: 'Rice fields in rural India' },
-  { image: 'https://images.pexels.com/photos/34194564/pexels-photo-34194564.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Products', caption: 'Novex motor controller hardware' },
-  { image: 'https://images.pexels.com/photos/17765487/pexels-photo-17765487.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Field Applications', caption: 'Sprinkler irrigation in operation' },
-  { image: 'https://images.pexels.com/photos/163170/board-printed-circuit-board-computer-electronics-163170.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Technology', caption: 'Electronic control circuitry' },
-  { image: 'https://images.pexels.com/photos/20445181/pexels-photo-20445181.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Agriculture', caption: 'Farmer tending to wheat field' },
-  { image: 'https://images.pexels.com/photos/5230957/pexels-photo-5230957.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Technology', caption: 'Digital monitoring in agriculture' },
-  { image: 'https://images.pexels.com/photos/18135422/pexels-photo-18135422.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Field Applications', caption: 'Tractor working in rural field' },
-  { image: 'https://images.pexels.com/photos/1472443/pexels-photo-1472443.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Products', caption: 'Data logging device' },
-  { image: 'https://images.pexels.com/photos/13801039/pexels-photo-13801039.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Agriculture', caption: 'Close-up of healthy crops' },
-  { image: 'https://images.pexels.com/photos/26730197/pexels-photo-26730197.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Field Applications', caption: 'Aerial view of farm operations' },
-  { image: 'https://images.pexels.com/photos/12558693/pexels-photo-12558693.png?auto=compress&cs=tinysrgb&w=1200', category: 'Technology', caption: 'Field sensor module' },
-  { image: 'https://images.pexels.com/photos/2382904/pexels-photo-2382904.jpeg?auto=compress&cs=tinysrgb&w=1200', category: 'Agriculture', caption: 'Harvesting in green fields' },
+  { image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200', category: 'Agriculture', caption: 'Rice fields in rural India' },
+  { image: 'https://images.unsplash.com/photo-1530533718754-001d2668365a?auto=format&fit=crop&w=1200', category: 'Products', caption: 'Novex motor controller hardware' },
+  { image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200', category: 'Field Applications', caption: 'Sprinkler irrigation in operation' },
+  { image: 'https://images.unsplash.com/photo-1586771107445-d3af2835368a?auto=format&fit=crop&w=1200', category: 'Technology', caption: 'Electronic control circuitry' },
+  { image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c36?auto=format&fit=crop&w=1200', category: 'Agriculture', caption: 'Farmer tending to wheat field' },
+  { image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200', category: 'Technology', caption: 'Digital monitoring in agriculture' },
+  { image: 'https://images.unsplash.com/photo-1530533718754-001d2668365a?auto=format&fit=crop&w=1200', category: 'Field Applications', caption: 'Tractor working in rural field' },
+  { image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200', category: 'Products', caption: 'Data logging device' },
+  { image: 'https://images.unsplash.com/photo-1586771107445-d3af2835368a?auto=format&fit=crop&w=1200', category: 'Agriculture', caption: 'Close-up of healthy crops' },
+  { image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c36?auto=format&fit=crop&w=1200', category: 'Field Applications', caption: 'Aerial view of farm operations' },
+  { image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200', category: 'Technology', caption: 'Field sensor module' },
+  { image: 'https://images.unsplash.com/photo-1530533718754-001d2668365a?auto=format&fit=crop&w=1200', category: 'Agriculture', caption: 'Harvesting in green fields' },
 ];
 
 export const galleryCategories = ['All', 'Products', 'Field Applications', 'Technology', 'Agriculture', 'Events'];

@@ -11,6 +11,7 @@ export function CartPage() {
     <>
       <SEO title="Cart | Novex Agro" description="Review your selected Novex Agro products." />
       <div className="container-page py-10 lg:py-16">
+        <Breadcrumbs items={[{ label: 'Store Home', path: '/store' }, { label: 'Cart' }]} />
         <h1 className="text-3xl font-bold text-ink mb-2">Shopping Cart</h1>
         <p className="text-muted mb-8">{totalItems} {totalItems === 1 ? 'item' : 'items'}</p>
 
@@ -22,7 +23,7 @@ export function CartPage() {
             <p className="font-semibold text-ink text-lg">Your cart is empty</p>
             <p className="mt-1 text-muted">Browse our products to get started.</p>
             <div className="mt-6">
-              <ButtonLink to="/products" size="md">Shop Products</ButtonLink>
+              <ButtonLink to="/store" size="md">Shop Products</ButtonLink>
             </div>
           </div>
         ) : (
@@ -32,13 +33,13 @@ export function CartPage() {
               {items.map((item) => (
                 <div key={item.product.slug} className="flex gap-4 p-5 bg-white border border-navy/8 rounded-xl">
                   <Link
-                    to={`/products/${item.product.slug}`}
+                    to={`/store/products/${item.product.slug}`}
                     className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden bg-cream"
                   >
                     <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
                   </Link>
                   <div className="flex-1 min-w-0">
-                    <Link to={`/products/${item.product.slug}`} className="font-bold text-ink hover:text-brand-green transition-colors">
+                    <Link to={`/store/products/${item.product.slug}`} className="font-bold text-ink hover:text-brand-green transition-colors">
                       {item.product.name}
                     </Link>
                     <p className="text-xs text-muted mt-0.5">{item.product.category}</p>
@@ -70,7 +71,7 @@ export function CartPage() {
                 >
                   Clear Cart
                 </button>
-                <Link to="/products" className="text-sm font-semibold text-brand-green link-underline">
+                <Link to="/store" className="text-sm font-semibold text-brand-green link-underline">
                   Continue Shopping
                 </Link>
               </div>

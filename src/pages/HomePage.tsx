@@ -1,313 +1,149 @@
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Cpu, Radio, Activity, ShieldCheck, Droplets, Gauge, Target,
-  Wifi, Calendar, Monitor, Database, Smartphone, Bell, Zap, Settings, Eye,
-  Sprout, TrendingDown, TrendingUp, MapPin, Clock, Wrench, Plug, ToggleLeft
+  Play, CheckCircle2, Star, Plus, Minus, ArrowRight,
+  Smartphone, ShieldCheck, Zap
 } from 'lucide-react';
 import { ButtonLink } from '@/components/ui/Button';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { ProductCard } from '@/components/ui/ProductCard';
-import { SolutionCard } from '@/components/ui/SolutionCard';
-import { FAQAccordion } from '@/components/ui/FAQAccordion';
-import { products } from '@/data/products';
-import { solutions } from '@/data/solutions';
-import { faqs, testimonials, blogPosts } from '@/data/content';
 import { Reveal, StaggerContainer, StaggerItem } from '@/components/motion';
 import { motion } from 'motion/react';
-const heroImage = 'https://images.pexels.com/photos/11276073/pexels-photo-11276073.jpeg?auto=compress&cs=tinysrgb&w=1920';
-const introImage = 'https://images.pexels.com/photos/20445181/pexels-photo-20445181.jpeg?auto=compress&cs=tinysrgb&w=1200';
-const problemImage = 'https://images.pexels.com/photos/18135422/pexels-photo-18135422.jpeg?auto=compress&cs=tinysrgb&w=1200';
-const visualImage = 'https://images.pexels.com/photos/17765487/pexels-photo-17765487.jpeg?auto=compress&cs=tinysrgb&w=1920';
-const ctaImage = 'https://images.pexels.com/photos/2382904/pexels-photo-2382904.jpeg?auto=compress&cs=tinysrgb&w=1920';
+import { products } from '@/data/products';
+import { faqs, testimonials, blogPosts } from '@/data/content';
+import { useState } from 'react';
 
-const valuePoints = [
-  { icon: Cpu, label: 'Smart Automation' },
-  { icon: Radio, label: 'Remote Monitoring' },
-  { icon: ShieldCheck, label: 'Reliable Hardware' },
-  { icon: Sprout, label: 'Farmer-Focused Technology' },
-];
-
-const problems = [
-  'Manual pump operation requiring field visits',
-  'Unnecessary travel to check equipment status',
-  'Limited visibility into farm operations',
-  'Inefficient irrigation control and scheduling',
-  'Difficulty managing equipment across locations',
-];
-
-const novexSolutions = [
-  { icon: Radio, label: 'Remote Control' },
-  { icon: Cpu, label: 'Automation' },
-  { icon: Activity, label: 'Monitoring' },
-  { icon: Wifi, label: 'Connected Devices' },
-  { icon: Database, label: 'Data-Driven Decisions' },
-];
-
-const steps = [
-  { num: '01', icon: Plug, title: 'Connect', desc: 'Connect your agricultural equipment to the Novex system.' },
-  { num: '02', icon: Settings, title: 'Configure', desc: "Set up the device according to the farm's requirements." },
-  { num: '03', icon: ToggleLeft, title: 'Control', desc: 'Manage connected equipment through the control interface.' },
-  { num: '04', icon: Eye, title: 'Monitor', desc: 'Observe equipment and farm information from one place.' },
-];
-
-const techCapabilities = [
-  { icon: Wifi, label: 'IoT Connectivity', desc: 'Devices communicate operational data.' },
-  { icon: Radio, label: 'Remote Control', desc: 'Operate equipment from a distance.' },
-  { icon: Calendar, label: 'Smart Scheduling', desc: 'Automate tasks with timed schedules.' },
-  { icon: Monitor, label: 'Equipment Monitoring', desc: 'Track status from a dashboard.' },
-  { icon: Database, label: 'Data Collection', desc: 'Log operational information over time.' },
-  { icon: Smartphone, label: 'Mobile Integration', desc: 'Access control from mobile devices.' },
-];
-
-const principles = [
-  { title: 'Simple to Operate', desc: 'Technology should reduce complexity, not create it.' },
-  { title: 'Reliable Hardware', desc: 'Products designed for practical agricultural environments.' },
-  { title: 'Connected Solutions', desc: 'Bring equipment, control and information closer together.' },
-  { title: 'Farmer-Focused Design', desc: 'Technology should solve real operational problems.' },
-];
+// Images
+const heroImage = 'https://images.unsplash.com/photo-1586771107445-d3af2835368a?auto=format&fit=crop&w=1920'; // Drone
+const wwd1 = 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800';
+const wwd2 = 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c36?auto=format&fit=crop&w=800';
+const wwd3 = 'https://images.unsplash.com/photo-1530533718754-001d2668365a?auto=format&fit=crop&w=800';
+const wwd4 = 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800';
+const appFarmer = 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=800'; // Map/Phone
+const aboutFarmers = 'https://images.unsplash.com/photo-1595841696650-659f81cebbdb?auto=format&fit=crop&w=1200';
+const impact1 = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000';
+const impact2 = 'https://images.unsplash.com/photo-1586771107445-d3af2835368a?auto=format&fit=crop&w=1000';
 
 export function HomePage() {
-  const featuredProducts = products.slice(0, 4);
-  const featuredSolutions = solutions.filter((s) => s.featured);
-  const otherSolutions = solutions.filter((s) => !s.featured);
-  const recentPosts = blogPosts.slice(0, 3);
+  const [openFaq, setOpenFaq] = useState<string | null>(faqs[0]?.question);
 
   return (
     <>
-      {/* SECTION 1: HERO */}
-      <section className="relative min-h-[88vh] flex items-center overflow-hidden">
+      {/* 1. HERO SECTION */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-navy">
           <motion.img 
             initial={{ scale: 1.05 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             src={heroImage} 
-            alt="Agricultural field in rural India" 
+            alt="Drone spraying a field" 
             className="w-full h-full object-cover" 
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/20" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
-        <div className="container-wide relative z-10 py-20">
-          <StaggerContainer delayChildren={0.2} staggerDelay={0.15} className="max-w-2xl">
+        <div className="container-wide relative z-10 py-24">
+          <StaggerContainer delayChildren={0.2} staggerDelay={0.15} className="max-w-3xl">
             <StaggerItem>
-              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-brand-lime mb-5">
-                Novex Agro &bull; Smart Agriculture
-              </p>
-            </StaggerItem>
-            <StaggerItem>
-              <h1 className="text-display text-white text-balance">
-                Smart Technology.<br />Stronger Harvest.
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                Smart Farming Solutions for Modern Agriculture.
               </h1>
             </StaggerItem>
             <StaggerItem>
-              <p className="mt-6 text-lg sm:text-xl text-white/80 leading-relaxed max-w-xl">
-                Practical technology for smarter irrigation, connected farm equipment and efficient agricultural operations.
+              <p className="mt-6 text-xl text-white/90 leading-relaxed max-w-2xl font-medium">
+                Empowering farmers with innovative technology to boost crop yields and sustainable practices.
               </p>
             </StaggerItem>
             <StaggerItem>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <ButtonLink to="/products" size="lg" variant="primary">
-                  Explore Products <ArrowRight className="w-5 h-5" />
+              <div className="mt-10 flex flex-col sm:flex-row gap-5 items-center">
+                <ButtonLink to="/products" size="lg" className="bg-brand-green text-white hover:bg-brand-green/90 rounded-full px-8 font-semibold w-full sm:w-auto text-center py-4 text-lg shadow-lg shadow-brand-green/20">
+                  Explore Products
                 </ButtonLink>
-                <ButtonLink to="/solutions" size="lg" variant="white">
-                  Explore Solutions
-                </ButtonLink>
+                <button className="flex items-center justify-center gap-3 bg-white text-ink hover:bg-white/90 rounded-full px-8 py-4 font-semibold w-full sm:w-auto transition-colors text-lg shadow-lg">
+                  <Play className="w-5 h-5" fill="currentColor" /> Watch Video
+                </button>
               </div>
             </StaggerItem>
           </StaggerContainer>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
       </section>
 
-      {/* SECTION 2: TRUST / VALUE STRIP */}
-      <section className="bg-white border-b border-navy/8">
-        <div className="container-page py-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {valuePoints.map((vp, i) => (
-              <Reveal key={vp.label} delay={i * 80}>
-                <div className="flex items-center gap-3 group cursor-default">
-                  <div className="flex items-center justify-center w-11 h-11 rounded-lg bg-brand-green/8 text-brand-green flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-brand-green/15">
-                    <vp.icon className="w-5 h-5" />
-                  </div>
-                  <span className="font-semibold text-ink/90 text-sm sm:text-base group-hover:text-ink transition-colors">{vp.label}</span>
+      {/* 2. FEATURED PRODUCT STRIP */}
+      <section className="bg-white border-b border-navy/10 relative z-20">
+        <div className="container-wide">
+          <div className="flex flex-col lg:flex-row items-center divide-y lg:divide-y-0 lg:divide-x divide-navy/10">
+            <div className="py-6 px-4 lg:px-8 w-full lg:w-1/4">
+              <p className="font-bold text-ink uppercase tracking-wider text-sm">Featured Products</p>
+              <p className="text-sm text-muted mt-1">Discover our latest tech</p>
+            </div>
+            {products.slice(0, 3).map((p) => (
+              <Link key={p.slug} to={`/products/${p.slug}`} className="group flex items-center gap-4 py-6 px-4 lg:px-8 w-full lg:w-1/4 hover:bg-cream/50 transition-colors">
+                <div className="w-12 h-12 rounded bg-cream flex-shrink-0 p-2 border border-navy/5">
+                  <img src={p.image} alt={p.name} className="w-full h-full object-contain" />
                 </div>
-              </Reveal>
+                <div>
+                  <h3 className="font-bold text-ink text-sm group-hover:text-brand-green transition-colors">{p.name}</h3>
+                  <p className="text-xs font-semibold text-brand-green mt-1">View Details →</p>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 3: INTRODUCTION */}
-      <section className="bg-white py-16 lg:py-24">
-        <div className="container-page">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <Reveal>
-              <p className="eyebrow mb-4">About Novex Agro</p>
-              <h2 className="text-heading text-ink text-balance">
-                Technology That Works Where Farming Needs It.
-              </h2>
-              <p className="mt-6 text-lg text-ink/80 leading-relaxed">
-                Novex Agro develops practical agricultural technology designed to simplify farm operations, improve control and bring connected intelligence closer to the field.
-              </p>
-              <p className="mt-4 text-ink/75 leading-relaxed">
-                Our products are built to address the operational realities of farming — from motor control and automation to monitoring and data collection.
-              </p>
-              <div className="mt-8">
-                <ButtonLink to="/about" variant="outline" size="md">
-                  Discover Novex Agro <ArrowRight className="w-4 h-4" />
-                </ButtonLink>
-              </div>
-            </Reveal>
-            <Reveal delay={150}>
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-md group">
-                <img src={introImage} alt="Farmer tending to a wheat field" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-                <div className="absolute inset-0 bg-navy/10 group-hover:bg-transparent transition-colors duration-500" />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4: FEATURED PRODUCTS */}
-      <section className="bg-cream py-16 lg:py-24">
+      {/* 3. WHAT WE DO */}
+      <section className="py-20 lg:py-28 bg-white">
         <div className="container-page">
           <Reveal>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-              <SectionHeading
-                eyebrow="Our Products"
-                title={<>Built for the Field.<br />Designed for Control.</>}
-              />
-              <ButtonLink to="/products" variant="outline" size="md" className="flex-shrink-0">
-                View All Products <ArrowRight className="w-4 h-4" />
-              </ButtonLink>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div>
+                <h2 className="text-4xl lg:text-5xl font-extrabold text-ink tracking-tight mb-4">What We Do</h2>
+                <p className="text-lg text-ink/70 max-w-xl">Building products for agriculture that bring real value and operational simplicity to farmers across the globe.</p>
+              </div>
+              <Link to="/solutions" className="font-bold text-brand-green hover:underline">View All →</Link>
             </div>
           </Reveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 100}>
-                <ProductCard product={p} />
+          
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {[
+              { img: wwd1, title: 'Smart Irrigation Systems' },
+              { img: wwd2, title: 'Precision Farming Equipment' },
+              { img: wwd3, title: 'Weather Monitoring Stations' },
+              { img: wwd4, title: 'Farm Management Software' },
+            ].map((item, i) => (
+              <Reveal key={i} delay={i * 100}>
+                <div className="group relative rounded-2xl overflow-hidden aspect-[3/4] shadow-md">
+                  <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col items-start text-left">
+                    <h3 className="text-white font-bold text-2xl mb-6">{item.title}</h3>
+                    <button className="bg-[#f08a3c] text-white px-6 py-2.5 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-[#d97830] transition-colors">
+                      Explore
+                    </button>
+                  </div>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 5: PROBLEM → SOLUTION */}
-      <section className="bg-navy text-white py-16 lg:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-50" />
-        <div className="container-page relative z-10">
-          <Reveal>
-            <div className="text-center mb-16">
-              <p className="eyebrow-light mb-4">The Shift</p>
-              <h2 className="text-heading text-white text-balance mx-auto">
-                From Manual Control<br />to Smarter Farming.
-              </h2>
+      {/* 4. OUR IMPACT (STATS) */}
+      <section className="bg-[#0b3320] text-white py-16">
+        <div className="container-wide">
+          <div className="grid lg:grid-cols-4 gap-12 items-center">
+            <div className="lg:col-span-1 border-b lg:border-b-0 lg:border-r border-white/20 pb-8 lg:pb-0 lg:pr-8">
+              <h2 className="text-3xl font-bold mb-3 text-brand-lime">Our Impact</h2>
+              <p className="text-white/80">Building products that create real value and impact across the agricultural sector.</p>
             </div>
-          </Reveal>
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Problems */}
-            <Reveal>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 h-full transition-all duration-300 hover:bg-white/10 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/20">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-red-500/15 text-red-400">
-                    <TrendingDown className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Common Challenges</h3>
-                </div>
-                <ul className="space-y-4">
-                  {problems.map((p) => (
-                    <li key={p} className="flex items-start gap-3 text-white/70">
-                      <span className="w-1.5 h-1.5 rounded-full bg-white/30 mt-2.5 flex-shrink-0" />
-                      <span className="text-sm leading-relaxed">{p}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-            {/* Solutions */}
-            <Reveal delay={150}>
-              <div className="bg-brand-green/15 border border-brand-green/25 rounded-2xl p-8 h-full transition-all duration-300 hover:bg-brand-green/20 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-green/20">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-brand-green/25 text-brand-lime">
-                    <TrendingUp className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">The Novex Approach</h3>
-                </div>
-                <div className="space-y-4">
-                  {novexSolutions.map((s) => (
-                    <div key={s.label} className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 text-brand-lime flex-shrink-0">
-                        <s.icon className="w-4 h-4" />
-                      </div>
-                      <span className="text-sm text-white/90 font-medium">{s.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: SOLUTIONS */}
-      <section className="bg-white py-16 lg:py-24">
-        <div className="container-page">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Our Solutions"
-              title={<>Technology for Every Stage of Farm Operations.</>}
-              align="center"
-              className="mb-12"
-            />
-          </Reveal>
-          <div className="grid lg:grid-cols-3 gap-6 mb-6">
-            {featuredSolutions.map((s, i) => (
-              <Reveal key={s.slug} delay={i * 100}>
-                <SolutionCard solution={s} variant="featured" />
-              </Reveal>
-            ))}
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherSolutions.map((s, i) => (
-              <Reveal key={s.slug} delay={i * 80}>
-                <SolutionCard solution={s} />
-              </Reveal>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <ButtonLink to="/solutions" variant="outline" size="md">
-              View All Solutions <ArrowRight className="w-4 h-4" />
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 7: HOW IT WORKS */}
-      <section className="bg-cream py-16 lg:py-24">
-        <div className="container-page">
-          <Reveal>
-            <SectionHeading
-              title={<>Simple Technology.<br />Straightforward Control.</>}
-              align="center"
-              className="mb-16"
-            />
-          </Reveal>
-          <div className="relative">
-            {/* Connecting line for desktop */}
-            <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-px bg-navy/12" />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-              {steps.map((step, i) => (
-                <Reveal key={step.num} delay={i * 120}>
-                  <div className="relative text-center group cursor-default">
-                    <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-white border-2 border-brand-green/20 text-brand-green mb-5 z-10 transition-all duration-300 group-hover:scale-110 group-hover:border-brand-green group-hover:shadow-lg group-hover:shadow-brand-green/20">
-                      <step.icon className="w-8 h-8 transition-transform duration-300 group-hover:rotate-12" />
-                      <span className="absolute -top-2 -right-2 flex items-center justify-center w-8 h-8 rounded-full bg-brand-green text-white text-xs font-bold transition-transform duration-300 group-hover:scale-110">
-                        {step.num}
-                      </span>
-                    </div>
-                    <h3 className="font-bold text-ink text-lg group-hover:text-brand-green transition-colors">{step.title}</h3>
-                    <p className="mt-2 text-sm text-ink/75 leading-relaxed max-w-xs mx-auto">{step.desc}</p>
-                  </div>
+            <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { val: '10K+', label: 'Happy Farmers' },
+                { val: '100+', label: 'Products' },
+                { val: '10+', label: 'Years Exp.' },
+                { val: '5+', label: 'Awards Won' },
+              ].map((stat, i) => (
+                <Reveal key={i} delay={i * 100} className="text-center lg:text-left">
+                  <div className="text-4xl md:text-5xl font-extrabold mb-2">{stat.val}</div>
+                  <div className="text-white/70 font-medium">{stat.label}</div>
                 </Reveal>
               ))}
             </div>
@@ -315,140 +151,256 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 8: TECHNOLOGY - EDITORIAL LAYOUT */}
-      <section className="bg-navy text-white py-16 lg:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
-        <div className="container-page relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-            <Reveal className="lg:col-span-5">
-              <div className="sticky top-28">
-                <SectionHeading
-                  eyebrow="Technology Core"
-                  eyebrowLight
-                  light
-                  title={<>Connected Intelligence for the Modern Farm.</>}
-                  className="mb-8"
-                />
-                <p className="text-white/75 text-lg leading-relaxed mb-8">
-                  Our systems are designed not just to automate, but to integrate seamlessly into your daily operations. From robust connectivity to smart scheduling, every feature is built to withstand the realities of Indian agriculture.
-                </p>
-                <ButtonLink to="/solutions" size="lg" variant="white">
-                  Discover Our Tech
-                </ButtonLink>
-              </div>
-            </Reveal>
-            <div className="lg:col-span-7">
-              <div className="space-y-12">
-                {techCapabilities.map((tc, i) => (
-                  <Reveal key={tc.label} delay={i * 80}>
-                    <div className="flex gap-6 group">
-                      <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-brand-blue/15 text-brand-blue flex-shrink-0 transition-transform duration-500 group-hover:scale-110 group-hover:bg-brand-blue group-hover:text-white">
-                        <tc.icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-white text-xl mb-2">{tc.label}</h3>
-                        <p className="text-white/60 leading-relaxed text-lg">{tc.desc}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 9: WHY NOVEX - SPLIT LAYOUT */}
-      <section className="bg-white py-16 lg:py-24">
+      {/* 5. APP SHOWCASE */}
+      <section className="py-20 lg:py-32 bg-white overflow-hidden">
         <div className="container-page">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <Reveal>
-              <div className="relative aspect-square md:aspect-[4/3] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl">
-                <img src={heroImage} alt="Indian agricultural fields" className="w-full h-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 p-8">
-                  <p className="text-white font-bold text-2xl">Empowering 10,000+ Farms.</p>
+              <div className="relative">
+                <div className="absolute inset-0 bg-cream rounded-full scale-150 -translate-x-1/4 -z-10" />
+                <img src={appFarmer} alt="Farmer using smartphone" className="relative z-10 w-full max-w-md mx-auto drop-shadow-2xl rounded-3xl" />
+              </div>
+            </Reveal>
+            <Reveal delay={150}>
+              <div className="uppercase font-bold tracking-widest text-brand-green/80 mb-4 text-sm">Download App</div>
+              <h2 className="text-5xl lg:text-6xl font-extrabold text-[#093524] mb-6 tracking-tight leading-tight">
+                Digital Power<br/>in every hand!
+              </h2>
+              <p className="text-lg text-ink/70 leading-relaxed mb-10 max-w-lg">
+                Manage your farm, control your equipment, and monitor real-time data from anywhere using the Novex Agro mobile app.
+              </p>
+              
+              <div className="flex gap-4 mb-12">
+                <button className="bg-ink text-white rounded-xl px-6 py-3 flex items-center gap-3 hover:bg-ink/90 transition">
+                  <div className="text-left">
+                    <div className="text-[10px] uppercase tracking-wider text-white/70">Download on the</div>
+                    <div className="font-bold text-lg leading-none">App Store</div>
+                  </div>
+                </button>
+                <button className="bg-white border border-navy/15 text-ink rounded-xl px-6 py-3 flex items-center gap-3 hover:bg-cream transition shadow-sm">
+                  <div className="text-left">
+                    <div className="text-[10px] uppercase tracking-wider text-ink/70">Get it on</div>
+                    <div className="font-bold text-lg leading-none">Google Play</div>
+                  </div>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-navy/10">
+                <div>
+                  <div className="text-2xl font-bold text-ink mb-1">50K+</div>
+                  <div className="text-xs uppercase text-muted font-bold tracking-wider">Downloads</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-ink mb-1">4.8</div>
+                  <div className="text-xs uppercase text-muted font-bold tracking-wider">Rating</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-ink mb-1">99%</div>
+                  <div className="text-xs uppercase text-muted font-bold tracking-wider">Uptime</div>
                 </div>
               </div>
             </Reveal>
-            <div>
-              <Reveal>
-                <SectionHeading
-                  eyebrow="The Novex Standard"
-                  title="Why Farmers Choose Us."
-                  className="mb-12"
-                />
-              </Reveal>
-              <div className="space-y-8">
-                {principles.map((p, i) => (
-                  <Reveal key={p.title} delay={i * 100}>
-                    <div className="flex gap-5 relative group">
-                      <div className="absolute left-6 top-10 bottom-[-2rem] w-px bg-navy/10 group-last:hidden" />
-                      <div className="relative z-10 flex items-center justify-center w-12 h-12 rounded-full bg-cream border-2 border-navy/10 text-navy font-bold flex-shrink-0 transition-colors group-hover:bg-brand-green group-hover:text-white group-hover:border-brand-green">
-                        {i + 1}
-                      </div>
-                      <div className="pt-2 pb-6">
-                        <h3 className="text-xl font-bold text-ink">{p.title}</h3>
-                        <p className="mt-2 text-ink/75 leading-relaxed text-lg">{p.desc}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 10: PRODUCT + AGRICULTURE VISUAL */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={visualImage} alt="Agricultural field" className="w-full h-full object-cover" loading="lazy" />
-          <div className="absolute inset-0 bg-navy/60" />
-        </div>
-        <div className="container-page relative z-10 py-20">
+      {/* 6. COLLABORATIONS */}
+      <section className="bg-[#0b3320] py-24">
+        <div className="container-page">
           <Reveal>
-            <div className="max-w-2xl">
-              <h2 className="text-heading text-white text-balance">
-                Bringing Smart Technology Closer to the Field.
-              </h2>
-              <div className="mt-8">
-                <ButtonLink to="/solutions" size="lg" variant="primary">
-                  Explore Our Technology <ArrowRight className="w-5 h-5" />
-                </ButtonLink>
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+              <div>
+                <p className="text-brand-lime font-bold uppercase tracking-wider text-sm mb-3">Our Network</p>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-white">Our Collaborations<br/>& Industry Partners</h2>
               </div>
+              <p className="text-white/70 max-w-md">Working alongside leading institutions and tech providers to bring the best to our farmers.</p>
             </div>
+          </Reveal>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Reveal delay={100} className="bg-[#12422c] rounded-2xl p-8 flex items-center justify-center border border-white/5">
+              <span className="text-white/50 font-bold text-2xl">AgriTech Inc.</span>
+            </Reveal>
+            <Reveal delay={200} className="lg:col-span-2 rounded-2xl overflow-hidden aspect-[2/1] bg-black">
+              <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=800" className="w-full h-full object-cover opacity-80" alt="Collaboration" />
+            </Reveal>
+            <Reveal delay={300} className="bg-[#12422c] rounded-2xl p-8 flex items-center justify-center border border-white/5">
+              <span className="text-white/50 font-bold text-2xl">EcoFarms</span>
+            </Reveal>
+            
+            <Reveal delay={400} className="lg:col-span-2 rounded-2xl overflow-hidden aspect-[2/1] bg-black">
+              <img src="https://images.pexels.com/photos/7947656/pexels-photo-7947656.jpeg?auto=compress&cs=tinysrgb&w=800" className="w-full h-full object-cover opacity-80" alt="Award" />
+            </Reveal>
+            <Reveal delay={500} className="bg-[#12422c] rounded-2xl p-8 flex items-center justify-center border border-white/5">
+               <span className="text-white/50 font-bold text-2xl">Global Ag</span>
+            </Reveal>
+            <Reveal delay={600} className="bg-[#12422c] rounded-2xl p-8 flex items-center justify-center border border-white/5">
+               <span className="text-white/50 font-bold text-2xl">IoT India</span>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. ABOUT NOVEX AGRO */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="container-page">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <Reveal>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-ink mb-6">About Novex Agro</h2>
+              <p className="text-lg text-ink/75 leading-relaxed mb-8">
+                Novex Agro is dedicated to revolutionizing Indian agriculture through smart, accessible technology. We build hardware and software solutions that help farmers manage resources, control equipment remotely, and improve overall operational efficiency.
+              </p>
+              
+              <ul className="space-y-5">
+                {[
+                  { title: 'Smart Technology', desc: 'IoT-enabled devices for remote monitoring and control.' },
+                  { title: 'Farmer-Centric Design', desc: 'Built to withstand harsh field conditions and erratic power.' },
+                  { title: 'Data-Driven Yields', desc: 'Insights that help optimize water usage and crop health.' }
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-4">
+                    <div className="mt-1">
+                      <CheckCircle2 className="w-6 h-6 text-brand-green" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-ink text-lg">{item.title}</h4>
+                      <p className="text-ink/60 mt-1">{item.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            
+            <Reveal delay={200}>
+              <div className="relative">
+                <div className="absolute -inset-4 bg-brand-green/10 rounded-[3rem] -z-10 rotate-3" />
+                <div className="rounded-[2.5rem] overflow-hidden shadow-2xl">
+                  <img src={aboutFarmers} alt="Farmers in field" className="w-full aspect-[4/5] object-cover" />
+                </div>
+                <div className="absolute bottom-8 left-8 right-8 bg-black/60 backdrop-blur-md text-white p-6 rounded-2xl border border-white/10">
+                  <h4 className="font-bold text-xl mb-1">Smart Solutions, Better Yields</h4>
+                  <p className="text-white/80 text-sm">Join thousands of farmers upgrading their fields.</p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. OUR IMPACT (IMAGES) */}
+      <section className="bg-cream py-24">
+        <div className="container-page text-center mb-16">
+          <SectionHeading title="Our Impact" align="center" className="mb-0" />
+          <div className="w-16 h-1 bg-brand-green mx-auto mt-6 rounded-full" />
+        </div>
+        
+        <div className="container-wide">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
+            <Reveal>
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group">
+                <img src={impact1} alt="Impact" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                <div className="absolute bottom-8 left-8 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-brand-green flex items-center justify-center">
+                    <Star className="w-6 h-6 text-white" fill="currentColor" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-xl">10K+ Happy Farmers</h3>
+                    <p className="text-white/80">Across multiple states</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={150}>
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group">
+                <img src={impact2} alt="Impact" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                <div className="absolute bottom-8 left-8 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-brand-green flex items-center justify-center">
+                    <Smartphone className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-xl">Smart App Control</h3>
+                    <p className="text-white/80">Monitor from anywhere</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+          
+          <Reveal delay={300} className="max-w-4xl mx-auto text-center mt-16">
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-ink mb-6">Smart farming solutions for modern agriculture</h2>
+            <p className="text-lg text-ink/70 leading-relaxed">
+              We empower rural communities by providing affordable, easy-to-use technology that directly improves crop outcomes and resource management. Our products are rigorously tested to ensure they deliver reliable performance day in and day out.
+            </p>
           </Reveal>
         </div>
       </section>
 
-      {/* SECTION 11: CUSTOMER STORIES */}
-      <section className="bg-cream py-16 lg:py-24">
-        <div className="container-page">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Customer Stories"
-              title="Trusted by Farmers Across India."
-              align="center"
-              className="mb-4"
-            />
-            <p className="text-center text-sm text-muted mt-2 max-w-xl mx-auto mb-12">
-              Customer testimonial placeholders. Replace with verified feedback before launch.
-            </p>
-          </Reveal>
-          <div className="grid md:grid-cols-3 gap-6">
+      {/* 9. TESTIMONIALS */}
+      <section className="py-24 bg-white">
+        <div className="container-page text-center mb-16">
+          <p className="text-brand-green font-bold uppercase tracking-wider text-sm mb-3">Testimonials</p>
+          <h2 className="text-4xl font-extrabold text-ink">What Farmers Say</h2>
+        </div>
+        
+        <div className="container-wide">
+          <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
               <Reveal key={i} delay={i * 100}>
-                <div className="bg-white border border-navy/8 rounded-2xl p-7 h-full flex flex-col">
-                  <div className="flex gap-1 text-brand-green mb-4">
+                <div className="bg-white border border-navy/10 shadow-lg shadow-navy/5 rounded-3xl p-8 h-full flex flex-col">
+                  <div className="flex gap-1 text-[#f08a3c] mb-6">
                     {[...Array(5)].map((_, j) => (
-                      <span key={j} className="w-4 h-4 rounded-full bg-brand-green/20" />
+                      <Star key={j} className="w-5 h-5" fill="currentColor" />
                     ))}
                   </div>
-                  <p className="text-ink leading-relaxed flex-1 italic">"{t.quote}"</p>
-                  <div className="mt-6 pt-5 border-t border-navy/8">
-                    <p className="font-semibold text-ink text-sm">{t.name}</p>
-                    <p className="text-xs text-muted mt-0.5">{t.role} &middot; {t.location}</p>
+                  <p className="text-ink/80 leading-relaxed text-lg flex-1 mb-8">"{t.quote}"</p>
+                  <div className="flex items-center gap-4 pt-6 border-t border-navy/5">
+                    <div className="w-12 h-12 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green font-bold text-xl">
+                      {t.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-bold text-ink">{t.name}</p>
+                      <p className="text-sm text-muted">{t.location}</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+             <ButtonLink to="/about" className="bg-brand-green text-white px-8 py-3 rounded-full font-bold">Read More Stories</ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. FAQ */}
+      <section className="py-24 bg-cream">
+        <div className="container-page">
+          <div className="text-center mb-16 max-w-2xl mx-auto">
+             <p className="text-brand-green font-bold uppercase tracking-wider text-sm mb-3">Have Questions?</p>
+             <h2 className="text-4xl lg:text-5xl font-extrabold text-[#093524] mb-6">Frequently Asked<br/>Questions</h2>
+             <p className="text-ink/70 text-lg">Find answers to common questions about our smart agricultural products.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+            {faqs.map((faq, i) => (
+              <Reveal key={i} delay={i * 50}>
+                <div 
+                  className={`bg-white rounded-2xl p-6 cursor-pointer border ${openFaq === faq.question ? 'border-brand-green shadow-md' : 'border-navy/10 hover:border-brand-green/50'}`}
+                  onClick={() => setOpenFaq(openFaq === faq.question ? null : faq.question)}
+                >
+                  <div className="flex gap-4 items-start">
+                    <div className="mt-1 flex-shrink-0 w-8 h-8 rounded bg-brand-green/10 text-brand-green flex items-center justify-center">
+                      {openFaq === faq.question ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-ink text-lg">{faq.question}</h4>
+                      {openFaq === faq.question && (
+                        <p className="mt-4 text-ink/70 leading-relaxed animate-in slide-in-from-top-2 fade-in duration-200">
+                          {faq.answer}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </Reveal>
@@ -457,49 +409,32 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 12: RESOURCES */}
-      <section className="bg-white py-16 lg:py-24">
+      {/* 11. LATEST NEWS */}
+      <section className="py-24 bg-white">
         <div className="container-page">
-          <Reveal>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-              <SectionHeading
-                eyebrow="Resources"
-                title="Insights for Smarter Agriculture."
-              />
-              <ButtonLink to="/resources" variant="outline" size="md" className="flex-shrink-0">
-                View All Articles <ArrowRight className="w-4 h-4" />
-              </ButtonLink>
-            </div>
-          </Reveal>
-          <div className="grid md:grid-cols-3 gap-6">
-            {recentPosts.map((post, i) => (
+           <Reveal>
+             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+               <div>
+                 <p className="text-brand-green font-bold uppercase tracking-wider text-sm mb-3">Insights & Updates</p>
+                 <h2 className="text-4xl font-extrabold text-ink">Latest News</h2>
+               </div>
+               <Link to="/resources" className="font-bold text-brand-green hover:underline">View All →</Link>
+             </div>
+           </Reveal>
+
+           <div className="grid md:grid-cols-3 gap-8">
+            {blogPosts.slice(0, 3).map((post, i) => (
               <Reveal key={post.slug} delay={i * 100}>
-                <Link
-                  to={`/resources/${post.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-xl border border-navy/8 bg-white transition-all duration-300 hover:shadow-lg hover:border-navy/15"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-cream">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex items-center gap-2 text-xs text-muted mb-3">
-                      <span className="font-semibold text-brand-green">{post.category}</span>
-                      <span>&middot;</span>
-                      <span>{post.date}</span>
+                <Link to={`/resources/${post.slug}`} className="group block h-full">
+                  <div className="relative rounded-2xl overflow-hidden aspect-[16/10] mb-6 shadow-md">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-brand-green font-bold text-xs uppercase tracking-wider px-3 py-1.5 rounded-full">
+                      {post.category}
                     </div>
-                    <h3 className="font-bold text-ink text-lg leading-snug group-hover:text-brand-green transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted leading-relaxed flex-1">{post.excerpt}</p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green">
-                      Read Article <ArrowRight className="w-4 h-4" />
-                    </span>
                   </div>
+                  <h3 className="font-bold text-ink text-xl mb-3 group-hover:text-brand-green transition-colors">{post.title}</h3>
+                  <p className="text-ink/60 mb-4 line-clamp-2">{post.excerpt}</p>
+                  <p className="text-brand-green font-bold text-sm">Read More →</p>
                 </Link>
               </Reveal>
             ))}
@@ -507,48 +442,54 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 13: FAQ */}
-      <section id="faq" className="bg-cream py-16 lg:py-24">
-        <div className="container-page">
-          <div className="grid lg:grid-cols-5 gap-12">
-            <Reveal className="lg:col-span-2">
-              <SectionHeading
-                eyebrow="FAQ"
-                title="Frequently Asked Questions."
-                description="General questions about Novex Agro and our products. For specific inquiries, please contact us."
-              />
-              <div className="mt-8">
-                <ButtonLink to="/contact" variant="outline" size="md">
-                  Contact Us <ArrowRight className="w-4 h-4" />
-                </ButtonLink>
+      {/* 12. VIDEO HIGHLIGHTS */}
+      <section className="py-24 bg-cream overflow-hidden">
+        <div className="container-page text-center">
+          <Reveal>
+             <p className="text-brand-green font-bold uppercase tracking-wider text-sm mb-3">Watch & Learn</p>
+             <h2 className="text-4xl font-extrabold text-ink mb-16">Check out our video highlights</h2>
+          </Reveal>
+          
+          <Reveal delay={150}>
+            <div className="relative rounded-3xl overflow-hidden aspect-[21/9] bg-navy shadow-2xl max-w-5xl mx-auto mb-8 group cursor-pointer">
+              <img src={impact1} className="w-full h-full object-cover opacity-60 group-hover:opacity-70 transition-opacity" alt="Video Highlight" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 group-hover:scale-110 transition-transform">
+                  <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+                </div>
               </div>
-            </Reveal>
-            <Reveal className="lg:col-span-3" delay={150}>
-              <FAQAccordion items={faqs} />
-            </Reveal>
-          </div>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-4 max-w-5xl mx-auto">
+              {[wwd1, wwd2, wwd3].map((imgUrl, i) => (
+                <div key={i} className="relative rounded-xl overflow-hidden aspect-[16/9] bg-navy cursor-pointer group">
+                  <img src={imgUrl} className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity" alt={`Thumbnail ${i+1}`} />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                      <Play className="w-4 h-4 text-white ml-0.5" fill="currentColor" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* SECTION 14: FINAL CTA */}
-      <section className="relative py-16 lg:py-24 overflow-hidden bg-brand-green">
-        <div className="absolute inset-0">
-          <img src={ctaImage} alt="" className="w-full h-full object-cover opacity-20" loading="lazy" />
-        </div>
-        <div className="container-page relative z-10 text-center">
+      {/* 13. FINAL CTA */}
+      <section className="bg-[#0b3320] py-24 text-center">
+        <div className="container-page">
           <Reveal>
-            <h2 className="text-heading text-white text-balance mx-auto">
-              Ready to Make Farming Smarter?
+            <p className="text-brand-lime font-bold uppercase tracking-wider text-sm mb-4">Start Your Journey With Us</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-10 tracking-tight">
+              Ready to Transform Your Farm?
             </h2>
-            <p className="mt-5 text-lg text-white/85 leading-relaxed max-w-2xl mx-auto">
-              Explore practical technology designed to bring greater control, connectivity and simplicity to modern agriculture.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <ButtonLink to="/products" size="lg" variant="white">
-                Explore Products
+            <div className="flex flex-col sm:flex-row justify-center gap-5">
+              <ButtonLink to="/store" variant="white" size="lg" className="rounded-full font-bold text-lg">
+                Get Started
               </ButtonLink>
-              <ButtonLink to="/contact" size="lg" variant="navy">
-                Talk to Novex Agro
+              <ButtonLink to="/contact" variant="ghost" size="lg" className="border-2 border-brand-green text-white rounded-full font-bold text-lg hover:bg-brand-green/20">
+                Contact Sales
               </ButtonLink>
             </div>
           </Reveal>

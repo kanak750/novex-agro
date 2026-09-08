@@ -37,7 +37,7 @@ export function CartDrawer() {
             <p className="font-semibold text-ink">Your cart is empty</p>
             <p className="mt-1 text-sm text-muted">Browse our products to get started.</p>
             <Link
-              to="/products"
+              to="/store"
               onClick={closeCart}
               className="mt-5 inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-brand-green text-white rounded-lg hover:bg-brand-green/90 transition-colors"
             >
@@ -50,7 +50,7 @@ export function CartDrawer() {
               {items.map((item) => (
                 <div key={item.product.slug} className="flex gap-3 pb-4 border-b border-navy/6 last:border-0">
                   <Link
-                    to={`/products/${item.product.slug}`}
+                    to={`/store/products/${item.product.slug}`}
                     onClick={closeCart}
                     className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-cream"
                   >
@@ -62,7 +62,7 @@ export function CartDrawer() {
                   </Link>
                   <div className="flex-1 min-w-0">
                     <Link
-                      to={`/products/${item.product.slug}`}
+                      to={`/store/products/${item.product.slug}`}
                       onClick={closeCart}
                       className="font-semibold text-ink text-sm leading-snug block hover:text-brand-green transition-colors"
                     >
@@ -101,17 +101,16 @@ export function CartDrawer() {
               ))}
             </div>
 
-            {/* Footer */}
             <div className="p-5 border-t border-navy/8 space-y-3">
               <Link
-                to="/cart"
+                to="/store/cart"
                 onClick={closeCart}
                 className="flex items-center justify-center w-full px-6 py-3 text-sm font-semibold border border-navy/15 rounded-lg hover:bg-navy/5 transition-colors"
               >
                 View Cart
               </Link>
               <Link
-                to="/checkout"
+                to="/store/checkout"
                 onClick={closeCart}
                 className="flex items-center justify-center w-full px-6 py-3 text-sm font-semibold bg-brand-green text-white rounded-lg hover:bg-brand-green/90 transition-colors"
               >

@@ -4,9 +4,12 @@ import { Check, CreditCard, Lock } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 export function CheckoutPage() {
   const { items, totalItems, clearCart } = useCart();
+  const { isAuthenticated } = useAuth();
   const [step, setStep] = useState<'info' | 'success'>('info');
   const [form, setForm] = useState({
     fullName: '', email: '', phone: '',
@@ -37,6 +40,10 @@ export function CheckoutPage() {
     }
   };
 
+  if (!isAuthenticated) {
+    return <Navigate to="/store/login" replace />;
+  }
+
   if (step === 'success') {
     return (
       <>
@@ -51,7 +58,7 @@ export function CheckoutPage() {
               Thank you for your order. This is a checkout placeholder — no payment has been processed. Integrate a payment provider (Razorpay, Stripe, etc.) and order management before launch.
             </p>
             <div className="mt-8">
-              <Link to="/products" className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-brand-green text-white rounded-lg hover:bg-brand-green/90 transition-colors">
+              <Link to="/store" className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-brand-green text-white rounded-lg hover:bg-brand-green/90 transition-colors">
                 Continue Shopping
               </Link>
             </div>
@@ -68,7 +75,7 @@ export function CheckoutPage() {
         <div className="container-page py-20 text-center">
           <h1 className="text-2xl font-bold text-ink">Your cart is empty</h1>
           <p className="mt-2 text-muted">Add products to your cart before checking out.</p>
-          <Link to="/products" className="mt-6 inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-brand-green text-white rounded-lg">
+          <Link to="/store" className="mt-6 inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-brand-green text-white rounded-lg">
             Shop Products
           </Link>
         </div>
@@ -80,7 +87,7 @@ export function CheckoutPage() {
     <>
       <SEO title="Checkout | Novex Agro" />
       <div className="container-page py-10">
-        <Breadcrumbs items={[{ label: 'Home', path: '/' }, { label: 'Cart', path: '/cart' }, { label: 'Checkout' }]} />
+        <Breadcrumbs items={[{ label: 'Store Home', path: '/store' }, { label: 'Cart', path: '/store/cart' }, { label: 'Checkout' }]} />
       </div>
 
       <div className="container-page pb-20">

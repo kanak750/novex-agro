@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Search, SlidersHorizontal, X, ChevronDown } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 import { PageHero } from '@/components/ui/Breadcrumbs';
-import { ProductCard } from '@/components/ui/ProductCard';
+import { ProductCard } from '@/components/public/ProductCard';
 import { products, productCategories } from '@/data/products';
 import { useReveal } from '@/hooks/useReveal';
 

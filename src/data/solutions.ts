@@ -7,7 +7,7 @@ export const solutions: Solution[] = [
     icon: 'Droplets',
     shortDescription: 'Automated and remotely controllable irrigation systems that reduce manual intervention and improve water management.',
     longDescription: 'Novex Smart Irrigation solutions bring automation and remote control to farm irrigation, allowing water flow to be managed more precisely and with less manual effort.',
-    image: 'https://images.pexels.com/photos/17765487/pexels-photo-17765487.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c36?auto=format&fit=crop&w=1200',
     problem: 'Traditional irrigation often requires manual valve operation and regular field visits, making it time-consuming and difficult to manage efficiently.',
     approach: 'Novex enables remote and scheduled control of irrigation equipment, allowing farmers to manage water delivery without being physically present at each point.',
     howItWorks: [
@@ -38,7 +38,7 @@ export const solutions: Solution[] = [
     icon: 'Radio',
     shortDescription: 'Operate agricultural motor pumps and equipment remotely without manual field visits.',
     longDescription: 'Remote Motor Control solutions from Novex allow farmers to start, stop and monitor motors from anywhere, reducing the need for physical travel to equipment locations.',
-    image: 'https://images.pexels.com/photos/34194564/pexels-photo-34194564.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200',
     problem: 'Operating agricultural motors typically requires being physically present at the pump location, which is time-consuming and inconvenient, especially across large farms.',
     approach: 'Novex provides remote control capability for motor pumps, enabling operation through a mobile or centralized interface without visiting the equipment site.',
     howItWorks: [
@@ -69,7 +69,7 @@ export const solutions: Solution[] = [
     icon: 'Activity',
     shortDescription: 'Centralized monitoring of equipment status, field conditions and operational data.',
     longDescription: 'Novex Farm Monitoring brings visibility to farm operations by collecting and displaying equipment and field data in one accessible interface.',
-    image: 'https://images.pexels.com/photos/5230957/pexels-photo-5230957.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1530533718754-001d2668365a?auto=format&fit=crop&w=1200',
     problem: 'Without monitoring, farmers have limited visibility into equipment status and field conditions, making it hard to identify issues early.',
     approach: 'Novex provides a monitoring platform that aggregates data from connected devices, giving farmers a single view of their operations.',
     howItWorks: [
@@ -99,7 +99,7 @@ export const solutions: Solution[] = [
     icon: 'Cpu',
     shortDescription: 'Automate repetitive farm operations with scheduling and intelligent device control.',
     longDescription: 'Novex Agricultural Automation solutions reduce manual workload by automating repetitive tasks such as pump operation and equipment switching.',
-    image: 'https://images.pexels.com/photos/18135422/pexels-photo-18135422.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200',
     problem: 'Many farm operations involve repetitive manual tasks that consume significant time and labor.',
     approach: 'Novex enables automation of equipment operation through scheduling and rule-based control, reducing the need for constant manual intervention.',
     howItWorks: [
@@ -129,7 +129,7 @@ export const solutions: Solution[] = [
     icon: 'Target',
     shortDescription: 'Data-driven approach to farm management using collected field and operational data.',
     longDescription: 'Novex Precision Agriculture solutions use data collected from field sensors and equipment to support more informed decision-making.',
-    image: 'https://images.pexels.com/photos/20286981/pexels-photo-20286981.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1586771107445-d3af2835368a?auto=format&fit=crop&w=1200',
     problem: 'Without accurate data, farm management decisions rely on estimates and routine rather than actual conditions.',
     approach: 'Novex collects operational and field data over time, providing a foundation for more precise and informed farm management.',
     howItWorks: [
@@ -159,7 +159,7 @@ export const solutions: Solution[] = [
     icon: 'Gauge',
     shortDescription: 'Monitor and optimize energy use and resource consumption across farm operations.',
     longDescription: 'Novex Energy & Resource Management solutions help farmers understand and manage energy consumption and resource use across their operations.',
-    image: 'https://images.pexels.com/photos/12032543/pexels-photo-12032543.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c5c36?auto=format&fit=crop&w=1200',
     problem: 'Energy and resource consumption across farm operations is often difficult to track, making optimization challenging.',
     approach: 'Novex provides monitoring and data logging that can help farmers understand consumption patterns and identify opportunities for efficiency.',
     howItWorks: [
